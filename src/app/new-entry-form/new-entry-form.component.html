@@ -1,1 +1,28 @@
-<p>new-entry-form works!</p>
+<div class="w-full rounded-lg bg-green-400 bg-opacity-25">
+
+  <form action="post" class="p-4">
+
+    <label for="title" class="mr-2">Title:</label>
+    <input type="text" name="title" id="title">
+
+    <label for="amount" class="ml-2 mr-2">Amount:</label>
+    <input type="text" name="amount" id="amount">
+
+    <p class="inline-block ml-2 mr-2">Operation:</p>
+    <div class="inline-block ml-2 mr-2">
+      <input class="mr-1" type="checkbox" id="add" name="add">
+      <label for="add">Deposit</label>
+    </div>
+    <div class="inline-block ml-2 mr-2">
+      <input class="mr-1" type="checkbox" id="sub" name="sub" checked>
+      <label for="add">Subtract</label>
+    </div>
+
+    <button type="submit">Submit</button>
+
+
+
+  </form>
+
+
+</div>
