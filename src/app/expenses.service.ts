@@ -13,7 +13,7 @@ export class ExpensesService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  private expensesUrl = 'https://expense-backend.azurewebsites.net/accounts/6043f43843124e952d95073d?withExpenses=True'
+  private expensesUrl = 'https://expense-backend.azurewebsites.net/accounts/6043f43843124e952d95073d/'
 
   expenses: Expense[] = [];
   expenseSubject = new BehaviorSubject<Expense[]>([]);
@@ -26,8 +26,20 @@ export class ExpensesService {
    }
 
    getAccount(): Observable<Account> { 
-      return this.http.get<Account>(this.expensesUrl);
+     return this.http.get<Account>(this.expensesUrl +'?withExpenses=True');
    }
+
+   addExpense(expense: Expense) : void {
+     if(!expense.title || !expense.price){
+       return;
+     }
+
+
+     this.http.post<Expense>(this.expensesUrl+'expenses', expense, this.httpOptions).subscribe((exp) => {       
+       this.expenses.unshift(exp);
+       this.update();
+     })
+   } 
 
   subscribe(observer: Observer<Expense[]>) {
     this.expenseSubject.subscribe(observer);
