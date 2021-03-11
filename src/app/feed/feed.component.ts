@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ExpensesService } from '../expenses.service';
+import { Expense } from '../models/expense';
+import { Account } from '../models/account';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-feed',
@@ -7,9 +11,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeedComponent implements OnInit {
 
-  constructor() { }
+  constructor(private expenseService: ExpensesService) { }
+
+  expenses = new BehaviorSubject<Expense[]>([]);
 
   ngOnInit(): void {
+    this.expenseService.subscribe(this.expenses);
+    console.log(this.expenses);
   }
+
 
 }
