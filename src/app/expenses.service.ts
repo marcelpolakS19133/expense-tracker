@@ -45,6 +45,15 @@ export class ExpensesService {
      })
    } 
 
+   deleteExpense(idExpense: string, idArray: number) : void {
+     this.http.delete<Expense>(this.expensesUrl + 'expenses/' + idExpense, this.httpOptions).subscribe((exp) => {
+
+      this.expenses.splice(idArray, 1);
+      this.update();
+
+     })
+   }
+
   update() {
     this.expenseSubject.next(this.expenses);
   }

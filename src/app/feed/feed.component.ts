@@ -19,5 +19,11 @@ export class FeedComponent implements OnInit {
     this.expenses = this.expenseService.expensesList;
   }
 
+  remove(idExpense: string, ind: number){
+    
+    this.expenseService.deleteExpense(idExpense, ind);
+    
+  }
+
 
 }
