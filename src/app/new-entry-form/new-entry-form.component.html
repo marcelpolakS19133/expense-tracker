@@ -1,37 +1,63 @@
 <div class="w-full rounded-lg bg-green-400 bg-opacity-25">
 
-  <div class="p-4 flex flex-col align-middle lg:flex-row justify-between items-center">
-    <div>
-      <label for="title" class="mr-2 font-semibold" >Title:</label>
-      <input type="text" name="title" id="title" class="h-9 rounded-lg" #title>
+  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()"
+    class="grid md:grid-cols-3 lg:grid-cols-4">
+
+
+    <div class="flex flex-col p-3">
+
+      <input type="text" name="title" id="title" class="h-9 pl-2 rounded-lg" formControlName="title" #title>
+      <label for="title"
+        class="m-1 mr-2 text-sm font-semibold text-gray-500 tracking-wider italic self-end">Title</label>
     </div>
 
-    <div>
-      <label for="amount" class="ml-2 mr-2 font-semibold">Amount:</label>
-      <input type="number" name="amount" id="amount" class="h-9 rounded-lg" #price>
+    <div class="flex flex-col p-3 md:pl-0">
+      <input type="number" name="amount" id="amount" class="h-9 pl-2 rounded-lg" formControlName="price" #price>
+      <label for="amount"
+        class="m-1 mr-2 text-sm font-semibold text-gray-500 tracking-wider italic self-end">Amount</label>
     </div>
 
-    <div class="flex items-center">
-      <label for="toggle" class="mr-2 font-semibold">Subtract</label>
-      <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-        <input type="checkbox" name="toggle" id="toggle" #deposit
-          class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-red-500 border-4 appearance-none cursor-pointer focus:outline-none" />
-        <label for="toggle"
-          class="toggle-label block overflow-hidden h-6 rounded-full bg-red-500 cursor-pointer"></label>
+
+    <div class="flex flex-col p-3 md:pl-0">
+      <input type="text" name="category" id="category" class="h-9 pl-2 rounded-lg" formControlName="category" #category>
+      <label for="category"
+        class="m-1 mr-2 text-sm font-semibold text-gray-500 tracking-wider italic self-end">Category</label>
+    </div>
+
+
+    <div class="flex flex-col p-3 md:pl-0 items-center md:col-start-2 lg:col-start-auto">
+      <div>
+        <button type="submit"
+        class="bg-green-700 text-white font-semibold hover:bg-blue-500 duration-300 w-full p-2 rounded-lg mb-2">Submit</button>
+        <div class="flex items-center">
+          <label for="toggle" class="mr-2 font-semibold">Subtract</label>
+          <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+            <input type="checkbox" name="toggle" id="toggle" formControlName="deposit" #deposit
+              class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-red-500 border-4 appearance-none cursor-pointer focus:outline-none" />
+            <label for="toggle"
+              class="toggle-label block overflow-hidden h-6 rounded-full bg-red-500 cursor-pointer"></label>
+          </div>
+          <label for="toggle" class="font-semibold">Deposit</label>
+        </div>
+
+
+
       </div>
-      <label for="toggle" class="font-semibold">Deposit</label>
 
 
-      
+
+
+
     </div>
 
 
 
-    <button (click)="add(title.value, price.value, deposit.checked); title.value=''; title.value=''" class="bg-green-700 text-white font-semibold hover:bg-blue-500 duration-300  p-2 rounded-lg">Submit</button>
+    <!-- <button (click)="add(title.value, price.value, deposit.checked); title.value=''; title.value=''" class="bg-green-700 text-white font-semibold hover:bg-blue-500 duration-300  p-2 rounded-lg">Submit</button> -->
 
 
 
-  </div>
+
+  </form>
 
 
 </div>
