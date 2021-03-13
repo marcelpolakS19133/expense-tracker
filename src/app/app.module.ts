@@ -9,6 +9,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,13 +1,49 @@
-<div *ngFor="let exp of expenses | async; index as id">
+<div *ngFor="let exp of expenses | async; index as ind">
 
   <div class="flex justify-between items-center mt-2 p-2  border-2 rounded-lg shadow-lg">
 
     <div class="flex flex-col">
-      <span class="text-2xl font-bold">{{exp.title}}</span>
-      <span class="text-lg">{{exp.category}}</span>
+      <span class="md:text-2xl font-bold">{{exp.title}}</span>
+      <span class="md:text-lg">{{exp.category}}</span>
     </div>
 
-    <span class="text-3xl font-bold">{{exp.price | currency}}</span>
+    <div class="flex flex-row">
+      <span class="md:text-3xl font-bold">{{exp.price | currency}}</span>
+
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        class="ml-4 w-6 h-6 self-center cursor-pointer" (click)="remove(exp.id, ind)">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+
+
 
   </div>
 </div>
+
+<!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+  <div *ngFor="let exp of expenses | async; index as id"
+    class="m-4 p-2 bg-gray-300 shadow-lg rounded-lg flex flex-col items-center justify-center">
+
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+      class="w-4 h-4 self-end justify-self-start cursor-pointer" (click)="remove(exp.id)">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+
+
+
+    <span class="hidden">{{exp.id}}</span>
+
+    <span class="text-3xl font-bold">{{exp.price | currency}}</span>
+
+
+    <span class="text-2xl font-bold">{{exp.title}}</span>
+    <span class="text-lg">{{exp.category}}</span>
+
+
+  </div>
+
+</div> -->

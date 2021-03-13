@@ -16,13 +16,17 @@ export class ExpensesService {
   private expensesUrl = 'https://expense-backend.azurewebsites.net/accounts/6043f43843124e952d95073d/'
 
   expenses: Expense[] = [];
-  expenseSubject = new BehaviorSubject<Expense[]>([]);
+  expenseSubject = new BehaviorSubject<Expense[]>(this.expenses);
 
   constructor(private http: HttpClient) {
     this.getAccount().subscribe((acc) => {
       this.expenses = acc.expenses;
       this.update();
     })
+   }
+
+   get expensesList(){
+     return this.expenseSubject.asObservable();
    }
 
    getAccount(): Observable<Account> { 
@@ -41,9 +45,14 @@ export class ExpensesService {
      })
    } 
 
-  subscribe(observer: Observer<Expense[]>) {
-    this.expenseSubject.subscribe(observer);
-  }
+   deleteExpense(idExpense: string, idArray: number) : void {
+     this.http.delete<Expense>(this.expensesUrl + 'expenses/' + idExpense, this.httpOptions).subscribe((exp) => {
+
+      this.expenses.splice(idArray, 1);
+      this.update();
+
+     })
+   }
 
   update() {
     this.expenseSubject.next(this.expenses);

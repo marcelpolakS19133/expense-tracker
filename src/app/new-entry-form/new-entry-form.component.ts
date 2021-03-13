@@ -3,6 +3,7 @@ import { ExpensesService } from '../expenses.service';
 import { Expense } from '../models/expense';
 import { Account } from '../models/account';
 import { BehaviorSubject } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-new-entry-form',
@@ -11,21 +12,26 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class NewEntryFormComponent implements OnInit {
 
-  constructor(private expenseService: ExpensesService) { }
+  constructor(private expenseService: ExpensesService, private formBuilder: FormBuilder) { }
 
-  add(title: string, price: string, deposit: boolean){
-    var priceNum = Number(price);
+  expenseForm: FormGroup = this.formBuilder.group({
+    price: '',
+    title: '',
+    deposit: false,
+    category: ''
+  });
+
+  onSubmit(): void {
+    var tmpExpense = this.expenseForm.value;
+
+    tmpExpense['price'] = Number.parseFloat(tmpExpense['price']);
     
-    if(!deposit){
-      priceNum=priceNum*-1;
+    if (!tmpExpense['deposit']){
+      tmpExpense['price'] = tmpExpense['price']*-1;
     }
-    const expense: Expense = {
-      id: '',
-      title: title,
-      price: priceNum,
-      category: 'hardcoded'
-    }
-    this.expenseService.addExpense(expense);
+
+    this.expenseService.addExpense(tmpExpense);
+
   }
 
   ngOnInit(): void {
