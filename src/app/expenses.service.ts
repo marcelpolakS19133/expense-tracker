@@ -50,14 +50,10 @@ export class ExpensesService {
 
       this.expenses.splice(idArray, 1);
        this.emitChanges();
-
      })
    }
 
   updateExpense(expense: Expense, idArray: number) {
-
-    console.log(expense);
-
 
     this.http.put<Expense>(this.expensesUrl + 'expenses/' + expense.id, expense, this.httpOptions).subscribe((exp) => {
       this.expenses[idArray] = expense;
