@@ -1,6 +1,46 @@
 <div *ngFor="let exp of expenses | async; index as ind">
 
-  <div class="flex justify-between items-center mt-2 p-2  border-2 rounded-lg shadow-lg">
+  <div *ngIf="editEntity.show && editEntity.id == ind"
+    class="flex flex-col  lg:flex-row justify-between items-center mt-2 p-2  border-2 rounded-lg shadow-lg bg-green-100">
+
+    <div class="flex">
+      <div>
+        <span class="font-semibold mr-4">Edit Mode:</span>
+      </div>
+
+      <div class="flex flex-col">
+        <input class="md:text-2xl font-bold bg-green-100 text-center lg:text-left" value={{exp.title}} #title>
+        <input class="md:text-lg bg-green-100 text-center lg:text-left" value={{exp.category}} #category>
+      </div>
+    </div>
+
+
+
+
+    <div class="flex flex-row">
+      <input type="number" class="md:text-3xl font-bold text-right bg-green-100 w-40" value={{exp.price}} #price>
+
+      <svg class="ml-4 w-6 h-6 self-center cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor"
+        (click)="update(exp.id, ind, title.value, category.value, price.value)">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        class="ml-4 w-6 h-6 self-center cursor-pointer" (click)="toggleEdit(ind)">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+
+
+
+
+  </div>
+
+  <div *ngIf="!editEntity.show || editEntity.id != ind"
+    class="flex justify-between items-center mt-2 p-2  border-2 rounded-lg shadow-lg">
 
     <div class="flex flex-col">
       <span class="md:text-2xl font-bold">{{exp.title}}</span>
@@ -8,14 +48,26 @@
     </div>
 
     <div class="flex flex-row">
-      <span class="md:text-3xl font-bold">{{exp.price | currency}}</span>
+
+      <span *ngIf="exp.price>0" class="md:text-3xl font-bold text-green-800">{{exp.price | number}} zł</span>
+      <span *ngIf="exp.price<0" class="md:text-3xl font-bold text-red-700">{{exp.price | number}} zł</span>
+
+      <svg class="ml-4 w-6 h-6 self-center cursor-pointer" (click)="toggleEdit(ind)" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      </svg>
 
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-        class="ml-4 w-6 h-6 self-center cursor-pointer" (click)="remove(exp.id, ind)">
+        class="ml-4 w-6 h-6 self-center cursor-pointer" (click)="remove(exp.id, ind, exp.title)">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
       </svg>
+
+
     </div>
+
+
 
 
 
