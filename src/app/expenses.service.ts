@@ -21,7 +21,7 @@ export class ExpensesService {
   constructor(private http: HttpClient) {
     this.getAccount().subscribe((acc) => {
       this.expenses = acc.expenses;
-      this.update();
+      this.emitChanges();
     })
    }
 
@@ -41,7 +41,7 @@ export class ExpensesService {
 
      this.http.post<Expense>(this.expensesUrl+'expenses', expense, this.httpOptions).subscribe((exp) => {       
        this.expenses.unshift(exp);
-       this.update();
+       this.emitChanges();
      })
    } 
 
@@ -49,12 +49,23 @@ export class ExpensesService {
      this.http.delete<Expense>(this.expensesUrl + 'expenses/' + idExpense, this.httpOptions).subscribe((exp) => {
 
       this.expenses.splice(idArray, 1);
-      this.update();
+       this.emitChanges();
 
      })
    }
 
-  update() {
+  updateExpense(expense: Expense, idArray: number) {
+
+    console.log(expense);
+
+
+    this.http.put<Expense>(this.expensesUrl + 'expenses/' + expense.id, expense, this.httpOptions).subscribe((exp) => {
+      this.expenses[idArray] = expense;
+      this.emitChanges();
+    })
+  }
+
+  emitChanges() {
     this.expenseSubject.next(this.expenses);
   }
 
