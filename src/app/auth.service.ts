@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   register(creds: Credentials): void {
-    this.httpClient.post(this.expensesUrl + 'register/', creds, this.httpOptions).subscribe(resp => console.log(resp));
+    this.httpClient.post(this.expensesUrl + 'register/', creds, this.httpOptions).subscribe(() => this.login(creds));
   }
 
   login(creds: Credentials): void {
