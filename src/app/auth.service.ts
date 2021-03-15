@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Credentials} from './models/credentials';
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class AuthService {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private cookies: CookieService) {
   }
 
   register(creds: Credentials): void {
@@ -26,5 +28,13 @@ export class AuthService {
 
   logout(): void {
     this.httpClient.post(this.expensesUrl + 'logout/', {}, this.httpOptions).subscribe(resp => console.log(resp));
+  }
+
+  isLoggedIn(): boolean {
+    return this.cookies.check('currentUser');
+  }
+
+  getCurrentUser(): string {
+    return this.cookies.get('currentUser');
   }
 }
