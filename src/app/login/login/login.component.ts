@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(creds);
 
-    this.router.navigate(['']);
+    this.router.navigate(['']).then();
   }
 
 }
