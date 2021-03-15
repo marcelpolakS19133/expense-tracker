@@ -8,10 +8,13 @@ import {CookieService} from 'ngx-cookie-service';
 })
 export class AuthService {
 
-  private expensesUrl = 'https://expense-backend.azurewebsites.net/auth/';
+  // private expensesUrl = 'https://expense-backend.azurewebsites.net/auth/';
+
+  private expensesUrl = 'http://localhost:32009/auth/';
 
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({'Content-Type': 'application/json'}),
+    withCredentials: true
   };
 
   constructor(private httpClient: HttpClient,

@@ -4,13 +4,13 @@
 
     <!-- ngIf (zalogowany) to inny div na essie -->
     <div *ngIf="!authService.isLoggedIn()" class="flex items-center flex-row self-center mr-4">
-      <a href="/login" class="ml-2 text-sm md:text-xl">Log In</a>
-      <a href="/register" class="ml-2 text-sm md:text-xl">Register</a>
+      <a routerLink="/login" class="ml-2 text-sm md:text-xl">Log In</a>
+      <a href="#" class="ml-2 text-sm md:text-xl">Register</a>
     </div>
 
     <div *ngIf="authService.isLoggedIn()" class="flex items-center flex-row self-center mr-4">
         <span class="md:ml-2 md:mr-2 text-sm md:text-xl">{{authService.getCurrentUser()}}</span>
-        <a href="/logout" class="ml-2 text-sm md:text-xl">Sign Out</a>
+        <a role="button" (click)="logout()" class="ml-2 text-sm md:text-xl">Sign Out</a>
     </div>
 
 </div>

@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Observer } from 'rxjs';
-import { Expense } from '../app/models/expense';
-import { Account } from '../app/models/account';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Expense} from './models/expense';
+import {Account} from './models/account';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ExpensesService {
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  private expensesUrl = 'https://expense-backend.azurewebsites.net/accounts/6043f43843124e952d95073d/'
+  private expensesUrl = 'https://expense-backend.azurewebsites.net/accounts/604e9b87b41645081337c91f/';
 
   expenses: Expense[] = [];
   expenseSubject = new BehaviorSubject<Expense[]>(this.expenses);
@@ -22,50 +22,51 @@ export class ExpensesService {
     this.getAccount().subscribe((acc) => {
       this.expenses = acc.expenses;
       this.emitChanges();
-    })
-   }
+    });
+  }
 
-   get expensesList(){
-     return this.expenseSubject.asObservable();
-   }
+  get expensesList(): Observable<Expense[]> {
+    return this.expenseSubject.asObservable();
+  }
 
-   getAccount(): Observable<Account> { 
-     return this.http.get<Account>(this.expensesUrl +'?withExpenses=True');
-   }
+  getAccount(): Observable<Account> {
+    return this.http.get<Account>(this.expensesUrl + '?withExpenses=True');
+  }
 
-   addExpense(expense: Expense) : void {
-     if(!expense.title || !expense.price){
-       return;
-     }
+  addExpense(expense: Expense): void {
+    if (!expense.title || !expense.price) {
+      return;
+    }
 
 
-     this.http.post<Expense>(this.expensesUrl+'expenses', expense, this.httpOptions).subscribe((exp) => {       
-       this.expenses.unshift(exp);
-       this.emitChanges();
-     })
-   } 
+    this.http.post<Expense>(this.expensesUrl + 'expenses', expense, this.httpOptions)
+      .subscribe((exp) => {
+        this.expenses.unshift(exp);
+        this.emitChanges();
+      });
+  }
 
-   deleteExpense(idExpense: string, idArray: number) : void {
-     this.http.delete<Expense>(this.expensesUrl + 'expenses/' + idExpense, this.httpOptions).subscribe((exp) => {
+  deleteExpense(idExpense: string, idArray: number): void {
+    this.http.delete<Expense>(this.expensesUrl + 'expenses/' + idExpense, this.httpOptions)
+      .subscribe(() => {
+        this.expenses.splice(idArray, 1);
+        this.emitChanges();
+      });
+  }
 
-      this.expenses.splice(idArray, 1);
-       this.emitChanges();
-
-     })
-   }
-
-  updateExpense(expense: Expense, idArray: number) {
+  updateExpense(expense: Expense, idArray: number): void {
 
     console.log(expense);
 
 
-    this.http.put<Expense>(this.expensesUrl + 'expenses/' + expense.id, expense, this.httpOptions).subscribe((exp) => {
-      this.expenses[idArray] = expense;
-      this.emitChanges();
-    })
+    this.http.put<Expense>(this.expensesUrl + 'expenses/' + expense.id, expense, this.httpOptions)
+      .subscribe(() => {
+        this.expenses[idArray] = expense;
+        this.emitChanges();
+      });
   }
 
-  emitChanges() {
+  emitChanges(): void {
     this.expenseSubject.next(this.expenses);
   }
 

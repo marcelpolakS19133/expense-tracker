@@ -1,7 +1,7 @@
-import { Expense } from '../models/expense';
+import { Expense } from './expense';
 
 export interface Account {
-    id: string,
-    name: string,
-    expenses: Expense[]
+    id: string;
+    name: string;
+    expenses: Expense[];
 }

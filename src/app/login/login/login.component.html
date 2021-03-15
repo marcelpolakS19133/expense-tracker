@@ -1,1 +1,16 @@
-<p>login works!</p>
+<div class="w-full rounded-lg bg-green-400 bg-opacity-25">
+  <form class="grid grid-cols-1" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="flex flex-col p-3">
+      <input type="text" name="username" id="username"
+             class="h-9 pl-2 rounded-lg" formControlName="username" #username>
+      <label for="username"
+             class="m-1 mr-2 text-sm font-semibold text-gray-500 tracking-wider italic self-end">Username</label>
+      <input type="password" name="password" id="password"
+             class="h-9 pl-2 rounded-lg" formControlName="password" #username>
+      <label for="password"
+             class="m-1 mr-2 text-sm font-semibold text-gray-500 tracking-wider italic self-end">password</label>
+      <button type="submit"
+              class="bg-green-700 text-white font-semibold hover:bg-blue-500 duration-300 w-full p-2 rounded-lg mb-2">Login</button>
+    </div>
+  </form>
+</div>
