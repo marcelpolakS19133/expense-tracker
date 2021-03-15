@@ -21,10 +21,10 @@ export class AuthService {
   }
 
   login(creds: Credentials): void {
-    this.httpClient.post(this.expensesUrl + 'login', creds, this.httpOptions).subscribe(resp => console.log(resp));
+    this.httpClient.post(this.expensesUrl + 'login/', creds, this.httpOptions).subscribe(resp => console.log(resp));
   }
 
   logout(): void {
-    this.httpClient.post(this.expensesUrl + 'logout', {}, this.httpOptions).subscribe(resp => console.log(resp));
+    this.httpClient.post(this.expensesUrl + 'logout/', {}, this.httpOptions).subscribe(resp => console.log(resp));
   }
 }
