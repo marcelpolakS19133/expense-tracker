@@ -1,31 +1,34 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { FeedComponent } from './feed/feed.component';
-import { NewEntryFormComponent } from './new-entry-form/new-entry-form.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {FeedComponent} from './feed/feed.component';
+import {NewEntryFormComponent} from './new-entry-form/new-entry-form.component';
+import {NavbarComponent} from './navbar/navbar.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {LoginComponent} from './login/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FeedComponent,
     NewEntryFormComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
