@@ -21,12 +21,16 @@ export class AuthService {
               private cookies: CookieService) {
   }
 
+  pre(): void{
+    this.httpClient.get<string>('http://localhost:32009/api/FBAuth/step2/').subscribe();
+  }
+
   register(creds: Credentials): void {
-    this.httpClient.post(this.expensesUrl + 'register/', creds, this.httpOptions).subscribe(() => this.login(creds));
+    this.httpClient.post(`${this.expensesUrl}register/`, creds, this.httpOptions).subscribe(() => this.login(creds));
   }
 
   login(creds: Credentials): void {
-    this.httpClient.post(this.expensesUrl + 'login/', creds, this.httpOptions).subscribe(resp => console.log(resp));
+    this.httpClient.post(`${this.expensesUrl}login/`, creds, this.httpOptions).subscribe(resp => console.log(resp));
   }
 
   logout(): void {

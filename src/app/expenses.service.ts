@@ -10,18 +10,21 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class ExpensesService {
 
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({'Content-Type': 'application/json'}),
+    withCredentials: true
   };
 
-  private expensesUrl = 'https://expense-backend.azurewebsites.net/accounts/604e9b87b41645081337c91f/';
-
+  // private expensesUrl = 'https://expense-backend.azurewebsites.net/accounts/604e9b87b41645081337c91f/';
+  private expensesUrl = 'http://localhost:32009/accounts/604e9b87b41645081337c91f/';
   expenses: Expense[] = [];
   expenseSubject = new BehaviorSubject<Expense[]>(this.expenses);
 
   constructor(private http: HttpClient) {
-    this.getAccount().subscribe((acc) => {
-      this.expenses = acc.expenses;
-      this.emitChanges();
+    this.getCSRF().subscribe((eee) => {
+      this.getAccount().subscribe((acc) => {
+        this.expenses = acc.expenses;
+        this.emitChanges();
+      });
     });
   }
 
@@ -29,8 +32,12 @@ export class ExpensesService {
     return this.expenseSubject.asObservable();
   }
 
+  getCSRF(): Observable<string> {
+    return this.http.get<string>('http://localhost:32009/api/FBAuth/step2', this.httpOptions);
+  }
+
   getAccount(): Observable<Account> {
-    return this.http.get<Account>(this.expensesUrl + '?withExpenses=True');
+    return this.http.get<Account>(this.expensesUrl + '?withExpenses=true', this.httpOptions);
   }
 
   addExpense(expense: Expense): void {
